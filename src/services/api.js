@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:8000', // Your Go backend URL
+  baseURL: 'http://localhost:8000',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -32,6 +32,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token expired or invalid
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       window.location.href = '/login';
     }

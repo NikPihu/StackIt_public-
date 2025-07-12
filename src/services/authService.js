@@ -7,7 +7,7 @@ export const authService = {
       const response = await api.post('/users/signup', userData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -26,7 +26,7 @@ export const authService = {
       
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 

@@ -1,24 +1,38 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { User, LogOut, Plus } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { User, LogOut, Plus, Search } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
 
   const handleLogout = () => {
     logout();
-    window.location.href = '/login';
+    navigate('/login');
   };
-  
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-xl font-bold text-gray-800">
-            DevOverflow
+      <div className="max-w-full px-6 py-4">
+        <div className="flex items-center justify-between">
+          <Link to="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
+            StackIT
           </Link>
+
+          {/* Search Bar */}
+          <div className="flex-1 max-w-2xl mx-8">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search questions..."
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
           
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
@@ -30,10 +44,13 @@ const Navbar = () => {
                   <Plus size={20} />
                   <span>Ask Question</span>
                 </Link>
-                <div className="flex items-center space-x-2 px-4 py-2 text-gray-700">
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                >
                   <User size={20} />
-                  <span>{user?.name || 'User'}</span>
-                </div>
+                  <span>{user?.name || 'Profile'}</span>
+                </Link>
                 <button 
                   onClick={handleLogout}
                   className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-red-600 transition-colors"

@@ -14,12 +14,16 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in on app start
+    const token = authService.getToken();
     const currentUser = authService.getCurrentUser();
-    if (currentUser && authService.isAuthenticated()) {
+    
+    if (token && currentUser) {
       setUser(currentUser);
+      setIsAuthenticated(true);
     }
     setLoading(false);
   }, []);
@@ -28,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const userData = await authService.login(credentials);
       setUser(userData);
+      setIsAuthenticated(true);
       return userData;
     } catch (error) {
       throw error;
@@ -46,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     authService.logout();
     setUser(null);
+    setIsAuthenticated(false);
   };
 
   const value = {
@@ -53,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     logout,
-    isAuthenticated: authService.isAuthenticated(),
+    isAuthenticated,
     loading
   };
 

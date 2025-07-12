@@ -7,7 +7,7 @@ export const questionService = {
       const response = await api.post('/question', questionData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -19,7 +19,7 @@ export const questionService = {
       });
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -29,7 +29,7 @@ export const questionService = {
       const response = await api.get(`/questions/${questionId}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -39,7 +39,7 @@ export const questionService = {
       const response = await api.get(`/questions/user/${userId}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -49,7 +49,7 @@ export const questionService = {
       const response = await api.put(`/questions/${questionId}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -59,7 +59,7 @@ export const questionService = {
       const response = await api.delete(`/questions/${questionId}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   }
 };

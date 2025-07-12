@@ -9,7 +9,7 @@ export const userService = {
       });
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   },
 
@@ -19,7 +19,7 @@ export const userService = {
       const response = await api.get(`/users/${userId}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { error: error.message };
     }
   }
 };
